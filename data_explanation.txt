@@ -1,0 +1,52 @@
+Straight out of Claudes asshole
+
+
+id : 
+A unique numeric identifier NASA/JPL assigns to each tracked object. Purely an index — no physical meaning, not useful as a model feature.
+
+
+name : 
+The object's designation, e.g. "162635 (2000 SS164)" or a formal name if it has one. Just a text label, not usable as a numeric feature without heavy processing that wouldn't add predictive value here.
+
+
+est_diameter_min and est_diameter_max : 
+NASA doesn't measure asteroid size directly in most cases — it's estimated from how bright the object appears (absolute_magnitude) combined with an assumed range of possible surface reflectivity (albedo), 
+since a small shiny object and a large dark object can look equally bright from Earth. That uncertainty in reflectivity is why you get a range (min/max) instead of one exact diameter, measured in kilometers.
+
+
+relative_velocity : 
+How fast the object is moving relative to Earth, in km/h, at its closest approach. This is the object's velocity relative to Earth's own motion through space — not its raw orbital speed around the Sun.
+
+
+miss_distance : 
+The closest distance the object comes to Earth during its approach, measured in kilometers. Smaller values mean a closer, more concerning pass.
+
+
+orbiting_body : 
+The reference body the object's orbit is being measured relative to for this dataset — in this dataset it's essentially always "Earth," since it only contains close-approach data relative to Earth. That's exactly why it ends up constant and gets dropped.
+
+
+sentry_object : 
+A boolean flag indicating whether the object is being tracked by NASA's Sentry system — a separate, more intensive automated monitoring system specifically for objects with a non-zero calculated probability of future Earth impact 
+(a much narrower, rarer designation than "hazardous"). Most objects are not Sentry objects, which is usually why this column ends up constant or near-constant in this dataset.
+
+
+absolute_magnitude :
+A measure of the object's intrinsic brightness — specifically, how bright it would appear if placed at a standardized distance from both the Sun and the observer. Lower values mean brighter (and typically larger) objects; it's inversely related to size, 
+which is exactly why it's used to estimate diameter in the first place, but it isn't identical to diameter since it's also affected by the object's reflectivity.
+
+
+hazardous : 
+The target label. True if NASA's criteria classify the object as "potentially hazardous" — broadly, this combines being large enough (above a size threshold) and passing close enough to Earth's orbit (below a distance threshold) to warrant tracking. 
+False otherwise. This is what your model is trying to predict.
+
+
+What we should keep for the analysis :
+    est_diameter_min
+    est_diameter_max
+    relative_velocity
+    miss_distance
+    absolute_magnitude
+    sentry_object (maybe)
+     
+
