@@ -129,4 +129,4 @@ Main libraries: pandas, NumPy, scikit-learn and matplotlib.
 ## Authors
 
 - **Adrian Funck** ([@Funckin](https://github.com/Funckin))
-- **Joakim** ([@joakimek99](https://github.com/joakimek99))
+- **Joakim Eklund** ([@joakimek99](https://github.com/joakimek99))
