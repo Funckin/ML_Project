@@ -98,9 +98,7 @@ ML_Project/
 │   ├── train_data.csv              # Generated: training split
 │   ├── validation_data.csv         # Generated: validation split
 │   ├── test_data.csv               # Generated: test split
-│   ├── plot_overview.png           # Generated: class balance and diameter plot
-│   ├── metrics_comparison.png      # Earlier experiment: model comparison
-│   └── threshold_confusion_matrices.png  # Earlier experiment: threshold tuning
+│   └── plot_overview.png           # Generated: class balance and diameter plot
 ├── report/
 │   ├── NEO_hazard_classification_report.pdf
 │   └── latex/                      # LaTeX source of the report
@@ -131,4 +129,4 @@ Main libraries: pandas, NumPy, scikit-learn and matplotlib.
 ## Authors
 
 - **Adrian Funck** ([@Funckin](https://github.com/Funckin))
-- **Joakim**
+- **Joakim** ([@joakimek99](https://github.com/joakimek99))
