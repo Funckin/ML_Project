@@ -1,0 +1,214 @@
+% Merkistökoodaus (kommentoi pois muut, jätä vain se, joka sopii omaan systeemiisi)
+
+%\usepackage[ansinew]{inputenc}		% Pitäisi toimia windowsissa ja macissakin
+%\usepackage[latin1]{inputenc} 		% Pitäisi toimia Linuxissa
+\usepackage[utf8]{inputenc} 			% Tätäkin voi kokeilla
+
+% Erilaisia paketteja käyttöön:
+
+% TÄMÄ POISTETTU KÄYTÖSTÄ TÄSTÄ DOKUMENTISTA KOSKA HOMMA ENGLANNIKSI
+%\usepackage[finnish]{babel}    		% suomalaiset babel-makrot
+\usepackage[T1]{fontenc}       		% kirjaimet, joissa aksentteja
+\usepackage{lmodern}
+\usepackage{amsfonts}          		% AMS-paketteja
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{verbatim}
+\usepackage{calc}              			% tarvitaan tehtratk-ymparistossa
+\usepackage{graphicx}          			% kuvia varten
+\usepackage{wasysym}          		% kellon kuvaa varten
+\usepackage{fancyhdr}
+\usepackage{color}
+\usepackage{booktabs}         			% paremmat taulukot
+\usepackage{pbox}	
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,urlcolor=blue, linkcolor=black, citecolor=black}
+\usepackage{xifthen}
+\usepackage{environ}
+\usepackage{enumitem}
+\usepackage{amssymb}
+
+% Otsikon tiedot
+\newcommand{\otsikko}{
+    \noindent
+    \textbf{HY / Matematiikan ja tilastotieteen osasto} \\
+    \textbf{\kurssi} \\
+%    \textbf{Kurssin nimi, kevät \the\year} \\
+    \ifthenelse{\tversio = 1}{\textbf{Harjoitus \harjoitusnro} }{ \textbf{Harjoitus \harjoitusnro{} -- Ratkaisuehdotuksia} \\}
+    }
+
+%Tehtäväsarjat ja välitekstit
+\newcounter{tehtavasarjaCounter}
+\newcommand{\tehtavasarja}[1][]{
+    \ifthenelse{\isempty{#1}}
+    {
+        \stepcounter{tehtavasarjaCounter}
+        \subsubsection*{Tehtäväsarja \Roman{tehtavasarjaCounter}}
+    }{
+        
+        \subsubsection*{#1}
+    }
+}
+
+\renewcommand{\tehtavasarja}[1][]{
+    \ifthenelse{\isempty{#1}}
+    {
+        \stepcounter{tehtavasarjaCounter}
+        \subsubsection*{Tehtäväsarja \Roman{tehtavasarjaCounter}}
+    }{
+        
+        \subsubsection*{#1}
+    }
+}
+
+
+\newcommand{\valiteksti}[1]{
+\noindent \emph{#1}
+}
+
+% Tehtävien ja ratkaisujen ympäristöt
+\newcounter{tehtavaCounter}
+\NewEnviron{tehtava}{
+        \begin{enumerate}[label = \bfseries t\arabic*.]
+            \setcounter{enumi}{\value{tehtavaCounter}}
+            \item \BODY
+            \setcounter{tehtavaCounter}{\value{enumi}}
+        \end{enumerate}
+    }
+\newcommand{\ratkaisu}[1]{\ifthenelse{\tversio = 2}{\noindent{\emph{Ratkaisu:}}  #1}{}}
+
+\newcounter{preppaustehtavaCounter}
+\NewEnviron{preppaustehtava}{
+        \begin{enumerate}[label = \bfseries p\arabic*.]
+            \setcounter{enumi}{\value{preppaustehtavaCounter}}
+            \item \BODY
+            \setcounter{preppaustehtavaCounter}{\value{enumi}}
+        \end{enumerate}
+    }
+
+
+% Integraalilaskennassa sijoitusmerkki saadaan komennolla \viiva{alaraja}{yläraja}
+
+\newcommand{\viiva}[2]{\mathop{\Big/}\limits_{\hspace{-2ex}{#1}}^{\hspace{2ex} {#2}}}
+
+% Muita lyhennyskomentoja:
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\vP}{\mathcal{P}}
+\newcommand{\vF}{\mathcal{F}}
+\newcommand{\kB}{\mathcal{B}}
+\newcommand{\kC}{\mathcal{C}}
+\newcommand{\kS}{\mathcal{S}}
+\newcommand{\kR}{\mathcal{R}}
+\newcommand{\kE}{\mathcal{E}}
+\newcommand{\kT}{\mathcal{T}}
+\newcommand{\vx}{\bar{x}}
+\newcommand{\vy}{\bar{y}}
+\newcommand{\vz}{\bar{z}}
+\newcommand{\vv}{\bar{v}}
+\newcommand{\vw}{\bar{w}}
+\newcommand{\vu}{\bar{u}}
+\newcommand{\vp}{\bar{p}}
+\newcommand{\vq}{\bar{q}}
+\newcommand{\vn}{\bar{n}}
+\newcommand{\va}{\bar{a}}
+\newcommand{\vb}{\bar{b}}
+\newcommand{\vc}{\bar{c}}
+\newcommand{\vd}{\bar{d}}
+\newcommand{\vi}{\bar{i}}
+\newcommand{\vj}{\bar{j}}
+\newcommand{\vk}{\bar{k}}
+\newcommand{\ve}{\bar{e}}
+\newcommand{\suoral}{\mathcal{l}}
+\newcommand{\nv}{\bar{0}}
+\newcommand{\pv}{\overline}
+\newcommand{\allev}[2]{\underline{\phantom{#2}}\llap{#1}}
+\newcommand{\tp}[1]{#1^{\top}}
+\newcommand{\gen}[1]{\left< #1 \right>}
+\newcommand{\norm}[1]{\lVert #1 \rVert}
+\renewcommand{\qedsymbol}{$\Box$}					%kauniimpi laatikkomerkki todistuksiin
+\newcommand{\pa}{\mathopen]}							%avoin väli
+\newcommand{\pe}{\mathclose[}							%suljettu väli
+\newcommand{\isby}[1]{\stackrel{\textrm{\scriptsize#1}}{=} }
+\newcommand{\equivalent}{\ \Leftrightarrow\ }
+\newcommand{\implikaatio}{\ \Rightarrow\ }
+
+% Uusia komentoja:
+
+\DeclareMathOperator{\kernel}{Ker}
+\DeclareMathOperator{\image}{Im}
+\DeclareMathOperator{\syt}{syt}
+\DeclareMathOperator{\pyj}{pyj}
+\DeclareMathOperator{\sgn}{sgn}
+\providecommand{\clock}{\ensuremath{\oplus}}
+\DeclareMathOperator{\proj}{\mathrm{proj}}
+\DeclareMathOperator{\vir}{\mathrm{span}}
+\DeclareMathOperator{\dist}{\mathrm{d}}
+\DeclareMathOperator{\koht}{\mathrm{perp}}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\kello}{\text{\clock}}
+
+% Sivun asetukset
+
+\addtolength{\textwidth}{2.5cm}      	
+\addtolength{\hoffset}{-1.25cm}
+\addtolength{\textheight}{5cm}
+\addtolength{\voffset}{-2.5cm}
+\addtolength{\footskip}{1.0cm}
+\setlength{\mathsurround}{1pt}     	
+\setlength{\parindent}{0in}
+\setlength{\headheight}{15pt}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\pagestyle{empty}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Alter some LaTeX defaults for better treatment of figures:
+    % See p.105 of "TeX Unbound" for suggested values.
+    % See pp. 199-200 of Lamport's "LaTeX" book for details.
+    %   General parameters, for ALL pages:
+    \renewcommand{\topfraction}{0.9}	% max fraction of floats at top
+    \renewcommand{\bottomfraction}{0.8}	% max fraction of floats at bottom
+    %   Parameters for TEXT pages (not float pages):
+    \setcounter{topnumber}{2}
+    \setcounter{bottomnumber}{2}
+    \setcounter{totalnumber}{4}     % 2 may work better (oli 4)
+    \setcounter{dbltopnumber}{2}    % for 2-column pages
+    \renewcommand{\dbltopfraction}{0.9}	% fit big float above 2-col. text
+    \renewcommand{\textfraction}{0.07}	% allow minimal text w. figs
+    %   Parameters for FLOAT pages (not text pages):
+    \renewcommand{\floatpagefraction}{0.7}	% require fuller float pages
+	% N.B.: floatpagefraction MUST be less than topfraction !!
+    \renewcommand{\dblfloatpagefraction}{0.7}	% require fuller float pages
+
+	% remember to use [htp] or [htpb] for placement
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{multicol}
+% Figures within a column...
+\makeatletter
+\newenvironment{tablehere}
+{\def\@captype{table}}
+{}
+\newenvironment{figurehere}
+{\def\@captype{figure}}
+{}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%täydennetyt matriisit
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
