@@ -1,25 +1,10 @@
 # Classifying Near-Earth Objects with Machine Learning
 
-Predicting whether a near-earth object (NEO) is **potentially hazardous** to Earth, using logistic regression and gradient boosting on NASA close-approach data.
+About 40,000 near-earth objects are known today, and almost all of them are harmless. NASA still flags some as potentially hazardous. We wanted to see how well a model could reproduce that label from four measured properties: estimated diameter, velocity relative to Earth, miss distance and absolute magnitude. The data is NASA's close-approach record, 90,836 rows pulled from Kaggle.
 
-Course project for **CS-C3240 Machine Learning**.
+The hard part is the imbalance. Only 9.7% of the rows are hazardous, so a model that answers "safe" every time gets 90% accuracy and is useless. We compared logistic regression (with `class_weight="balanced"`) against gradient boosting. Gradient boosting won on accuracy, 0.916 on the validation set, and missed about three out of four hazardous objects. Logistic regression was much less precise but caught 93% of them on the held-out test set, 1,651 of 1,768. We went with logistic regression. A false alarm means someone takes a second look. A missed hazard is the mistake that matters.
 
-📄 **[Read the full report (PDF)](report/NEO_hazard_classification_report.pdf)**
-
----
-
-## Overview
-
-Around 40,000 near-earth objects are currently known. Most pose no threat, but identifying the ones that might is important, and classifying them by hand doesn't scale. This project frames the task as a **supervised binary classification** problem: given an object's measured properties, predict whether NASA labels it as potentially hazardous.
-
-Two models were compared:
-
-| Model | Why it was chosen |
-|---|---|
-| **Logistic regression** | Simple, interpretable model designed for binary outputs. Trained with `class_weight="balanced"` to counter the class imbalance. |
-| **Gradient boosting** | Ensemble of regression trees that can capture nonlinear relationships, since no single feature correlated strongly with the label. |
-
-**Final model: logistic regression.** It detects **93% of hazardous objects** on unseen test data. For a safety problem, a false alarm is cheaper than a missed hazard, so recall was prioritised over accuracy.
+This was our course project for CS-C3240 Machine Learning. The full write-up is in the [report](report/NEO_hazard_classification_report.pdf).
 
 ## Dataset
 
@@ -27,14 +12,14 @@ Two models were compared:
 
 | Feature | Description | Used |
 |---|---|---|
-| `est_diameter_max` | Estimated maximum diameter (km) | ✅ |
-| `relative_velocity` | Velocity relative to Earth (km/h) | ✅ |
-| `miss_distance` | Closest distance to Earth during the observed approach (km) | ✅ |
-| `absolute_magnitude` | Intrinsic brightness (higher = fainter, usually smaller) | ✅ |
-| `hazardous` | **Target**: potentially hazardous or not | 🎯 |
-| `est_diameter_min` | Estimated minimum diameter (km) | ❌ perfectly correlated with max (r = 1.0) |
-| `id`, `name` | Identifiers | ❌ no predictive value |
-| `orbiting_body`, `sentry_object` | Same value for every row | ❌ no information |
+| `est_diameter_max` | Estimated maximum diameter (km) | Yes |
+| `relative_velocity` | Velocity relative to Earth (km/h) | Yes |
+| `miss_distance` | Closest distance to Earth during the observed approach (km) | Yes |
+| `absolute_magnitude` | Intrinsic brightness (higher = fainter, usually smaller) | Yes |
+| `hazardous` | **Target**: potentially hazardous or not | Target |
+| `est_diameter_min` | Estimated minimum diameter (km) | No (duplicates max, r = 1.0) |
+| `id`, `name` | Identifiers | No (nothing to predict from) |
+| `orbiting_body`, `sentry_object` | Same value for every row | No (carries no information) |
 
 The classes are heavily imbalanced: **90.3%** non-hazardous vs **9.7%** hazardous. A model that always answers "not hazardous" would already be 90% accurate, so accuracy alone is misleading.
 
